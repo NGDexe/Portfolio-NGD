@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0f16">
+  <title>Naïss Geoffroy-Deride — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-0:#000103;
+      --bg-1:#020308;
+      --surface:#090d14;
+      --surface-2:#0c121d;
+      --stroke:#171c28;
+      --stroke-soft:rgba(255,255,255,0.08);
+      --text:#e7ecf3;
+      --muted:#a9b0bd;
+      --accent:#41e3d4;
+      --accent-2:#8af0ff;
+      --accent-3:#5bbcff;
+      --glow:rgba(65,227,212,0.25);
+      --glow-strong:rgba(65,227,212,0.45);
+      --radius:22px;
+      --radius-sm:14px;
+      --radius-lg:30px;
+      --shadow:0 30px 80px rgba(0,0,0,0.45);
+      --shadow-soft:0 14px 30px rgba(0,0,0,0.28);
+      --shadow-strong:0 36px 90px rgba(0,0,0,0.55);
+      --max:1160px;
+      --font-body:'Inter',system-ui,-apple-system,sans-serif;
+      --font-heading:'Inter',system-ui,-apple-system,sans-serif;
+      --font-display:'Inter',system-ui,-apple-system,sans-serif;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      min-height:100%;
+      font-family:var(--font-body);
+      color:var(--text);
+      background:
+        radial-gradient(800px circle at 14% 12%, rgba(109,214,193,0.02), transparent 55%),
+        radial-gradient(900px circle at 86% 14%, rgba(242,184,109,0.015), transparent 55%),
+        radial-gradient(1000px circle at 50% 90%, rgba(122,166,255,0.02), transparent 60%),
+        linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 100%);
+      background-attachment:fixed;
+      overflow-x:hidden;
+    }
+    a, button{cursor:pointer;}
+    input, textarea{cursor:text;}
+    img{max-width:100%;display:block;}
+    h1, h2, h3{font-family:var(--font-heading);font-weight:600;}
+    p{line-height:1.7;}
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size:32px 32px;
+      opacity:0.05;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .page{
+      position:relative;
+      z-index:1;
+    }
+
+    .container{
+      width:min(var(--max), 92vw);
+      margin:0 auto;
+    }
+
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(10,12,18,0.82);
+      backdrop-filter: blur(14px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      box-shadow:0 16px 40px rgba(0,0,0,0.35);
+    }
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      padding:18px 0;
+      flex-wrap:nowrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:0 0 auto;
+    }
+    .brand-avatar{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 12px 26px rgba(0,0,0,0.3);
+    }
+    .brand-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      line-height:1.1;
+    }
+    .brand-name{
+      font-weight:600;
+      letter-spacing:0.02em;
+    }
+    .brand-role{
+      font-size:0.72rem;
+      text-transform:uppercase;
+      letter-spacing:0.2em;
+      color:var(--muted);
+    }
+
+    .site-nav{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:1 1 auto;
+      min-width:0;
+    }
+    .site-nav a{
+      position:relative;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.9rem;
+      padding:6px 2px;
+      white-space:nowrap;
+      transition:color 0.2s ease;
+    }
+    .site-nav a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-4px;
+      width:0;
+      height:2px;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition:width 0.25s ease;
+    }
+    .site-nav a:hover{color:var(--text);}
+    .site-nav a:hover::after{width:100%;}
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      flex-wrap:nowrap;
+      white-space:nowrap;
+    }
+    .nav-toggle{
+      position:absolute;
+      width:1px;
+      height:1px;
+      opacity:0;
+      pointer-events:none;
+    }
+    .nav-toggle-btn{
+      display:none;
+      align-items:center;
+      justify-content:center;
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,0.03);
+      box-shadow:var(--shadow-soft);
+      gap:4px;
+      cursor:pointer;
+    }
+    .nav-toggle-btn span{
+      display:block;
+      width:18px;
+      height:2px;
+      background:var(--text);
+      border-radius:999px;
+    }
+    .nav-toggle:focus-visible + .nav-toggle-btn{
+      outline:2px solid var(--accent);
+      outline-offset:3px;
+    }
+
+    .header-cta{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      flex-wrap:nowrap;
+      justify-content:flex-end;
+      flex:0 0 auto;
+      white-space:nowrap;
+    }
+    .header-cta .btn{
+      min-width:150px;
+      padding-inline:26px;
+    }
+    .availability{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:0.82rem;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(65,227,212,0.25);
+      background:rgba(65,227,212,0.08);
+    }
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 12px var(--glow);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 20px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.9rem;
+      letter-spacing:0.02em;
+      transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      background:rgba(255,255,255,0.03);
+      box-shadow:var(--shadow-soft);
+    }
+    .btn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(65,227,212,0.45);
+      background:rgba(255,255,255,0.06);
+      box-shadow:0 16px 34px rgba(0,0,0,0.35);
+    }
+    .btn.primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#071117;
+      border-color:transparent;
+      box-shadow:0 16px 34px var(--glow);
+    }
+    .btn.primary:hover{box-shadow:0 20px 44px var(--glow-strong);}
+    .music-control{
+      position:fixed;
+      right:24px;
+      bottom:24px;
+      z-index:30;
+      padding:10px 14px;
+      font-size:0.82rem;
+    }
+
+    .hero{
+      padding:72px 0 40px;
+      position:relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(65,227,212,0.35), transparent 60%);
+      top:-180px;
+      right:-140px;
+      filter:blur(8px);
+      opacity:0.7;
+      z-index:0;
+      pointer-events:none;
+    }
+    .hero-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(0,0.9fr);
+      gap:48px;
+      align-items:center;
+    }
+    .hero-side{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .eyebrow{
+      text-transform:uppercase;
+      letter-spacing:0.28em;
+      font-size:0.7rem;
+      color:var(--accent-2);
+      font-weight:700;
+      margin-bottom:12px;
+    }
+    .hero-title{
+      font-family:var(--font-display);
+      font-size:3.2rem;
+      line-height:1.02;
+      letter-spacing:0.02em;
+    }
+    .hero-title span{
+      display:block;
+      background:linear-gradient(90deg, #ffffff, #6fd3ff);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .hero-role{
+      color:var(--muted);
+      margin:12px 0 12px;
+      font-size:1rem;
+    }
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(65,227,212,0.25);
+      color:var(--muted);
+      font-size:0.85rem;
+      background:rgba(65,227,212,0.08);
+      margin-bottom:18px;
+    }
+    .lead{
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.7;
+      margin-bottom:18px;
+      max-width:640px;
+      text-wrap:balance;
+    }
+    .lead span{display:block;}
+    .lead span + span{margin-top:10px;color:rgba(231,236,243,0.78);}
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(65,227,212,0.08);
+      color:#dff8f8;
+      font-size:0.8rem;
+      border:1px solid rgba(65,227,212,0.2);
+    }
+
+    .profile-card{
+      display:grid;
+      gap:16px;
+      background:rgba(12,16,26,0.88);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:var(--radius-lg);
+      padding:22px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(12px);
+      position:relative;
+      overflow:hidden;
+    }
+    .profile-card::after{
+      content:"";
+      position:absolute;
+      inset:auto -30% -55% -30%;
+      height:120%;
+      background:radial-gradient(circle, rgba(65,227,212,0.18), transparent 60%);
+      opacity:0.6;
+      pointer-events:none;
+    }
+    .profile-photo{
+      height:220px;
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 18px 40px rgba(0,0,0,0.4);
+    }
+    .profile-photo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:50% 20%;
+    }
+    .info-grid{
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+    .info-item span{
+      display:block;
+      font-size:0.75rem;
+      text-transform:uppercase;
+      letter-spacing:0.2em;
+      color:rgba(231,236,243,0.55);
+      margin-bottom:4px;
+    }
+    .info-item strong{
+      font-weight:600;
+      color:var(--text);
+    }
+
+    .stat-row{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+    }
+    .stat{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:12px 14px;
+      border-radius:var(--radius-sm);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      box-shadow:var(--shadow-soft);
+      transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .stat:hover{
+      transform:translateY(-4px);
+      border-color:rgba(65,227,212,0.35);
+      box-shadow:0 20px 40px rgba(0,0,0,0.35);
+    }
+    .stat strong{font-size:1.5rem;line-height:1;color:var(--text);}
+    .stat span{color:var(--muted);font-size:0.85rem;line-height:1.3;text-wrap:balance;}
+
+    .section{
+      padding:64px 0;
+    }
+    .section-header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:28px;
+    }
+    .section-title{
+      font-size:2.2rem;
+      position:relative;
+      display:inline-block;
+      padding-bottom:10px;
+    }
+    .section-title::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:56px;
+      height:3px;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .section-sub{
+      color:var(--muted);
+      max-width:560px;
+      line-height:1.7;
+      text-wrap:balance;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:24px;
+    }
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:24px;
+    }
+    .card{
+      background:rgba(6,9,14,0.94);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow-soft);
+      backdrop-filter: blur(8px);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      transition:transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(65,227,212,0.25);
+      box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    }
+    .card p{
+      color:var(--muted);
+    }
+    .chip-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--muted);
+      font-size:0.85rem;
+    }
+
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:24px;
+    }
+    .project-card{
+      padding:0;
+      overflow:hidden;
+    }
+
+    .project-card{
+      position:relative;
+      overflow:hidden;
+    }
+    .project-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:inherit;
+      background-size:cover;
+      background-position:center 75%;
+      filter:blur(3px);
+      opacity:1;
+      transform:none;
+      z-index:0;
+    }
+    .project-card::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      top:0;
+      height:55%;
+      border-radius:inherit;
+      background:linear-gradient(180deg, rgba(6,10,16,0.45) 0%, rgba(6,10,16,0.18) 55%, rgba(6,10,16,0) 100%);
+      backdrop-filter:blur(2px);
+      z-index:1;
+      pointer-events:none;
+    }
+    .project-card > *{
+      position:relative;
+      z-index:2;
+    }
+    .project-card.bg-web::before{background-image:url("images/nature-web.jpg.jpg?v=20260209");}
+    .project-card.bg-lua::before{background-image:url("images/nature-night.jpg.jpg?v=20260209");}
+    .project-card.bg-ux::before{background-image:url("images/nature-mist.jpg.jpg?v=20260209");}
+    .project-card.bg-sec::before{background-image:url("images/nature-dark.jpg.jpg?v=20260209");}
+    .project-media{
+      position:relative;
+      height:140px;
+      border-bottom:none;
+      background:transparent;
+    }
+    .project-media::before{
+      content:none;
+    }
+    .project-media .media-content{
+      position:absolute;
+      left:16px;
+      bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      z-index:2;
+    }
+    .project-media .media-icon{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      background:rgba(7,17,23,0.4);
+      border:1px solid rgba(255,255,255,0.2);
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      font-size:0.75rem;
+      letter-spacing:0.08em;
+      color:#f2f6ff;
+      text-transform:uppercase;
+      backdrop-filter: blur(6px);
+      box-shadow:0 10px 20px rgba(0,0,0,0.35);
+    }
+    .project-media .media-label{
+      font-size:0.85rem;
+      font-weight:600;
+      letter-spacing:0.06em;
+      color:rgba(231,236,243,0.92);
+      text-transform:uppercase;
+    }
+    .project-body{
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      background:rgba(6,10,16,0.9);
+    }
+    .project-tags{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:auto;
+    }
+
+    .timeline{
+      display:grid;
+      gap:18px;
+      border-left:1px solid rgba(255,255,255,0.08);
+      padding-left:20px;
+    }
+    .timeline-item{
+      position:relative;
+      padding:18px 20px;
+      border-radius:var(--radius);
+      background:rgba(12,16,26,0.88);
+      border:1px solid rgba(255,255,255,0.08);
+      transition:transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .timeline-item::before{
+      content:"";
+      position:absolute;
+      left:-29px;
+      top:26px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 12px var(--glow);
+    }
+    .timeline-item:hover{
+      transform:translateY(-4px);
+      border-color:rgba(65,227,212,0.25);
+      box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    }
+    .timeline-item strong{
+      display:block;
+      font-family:var(--font-heading);
+      font-size:1rem;
+      margin-bottom:6px;
+    }
+    .timeline-item span{
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+
+    .experience-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:24px;
+      margin-top:24px;
+    }
+    .experience-list{
+      list-style:none;
+      display:grid;
+      gap:10px;
+      color:var(--muted);
+      padding-left:0;
+    }
+    .experience-list li{
+      padding-left:18px;
+      position:relative;
+    }
+    .experience-list li::before{
+      content:"•";
+      position:absolute;
+      left:0;
+      color:var(--accent-2);
+      font-size:1.1rem;
+      font-weight:700;
+      line-height:1;
+      top:0.1em;
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);
+      gap:24px;
+      align-items:stretch;
+    }
+    .contact-form{
+      display:grid;
+      gap:16px;
+      padding:20px;
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(255,255,255,0.08);
+      background:linear-gradient(160deg, rgba(13,20,29,0.82), rgba(9,13,20,0.96));
+      box-shadow:0 22px 50px rgba(0,0,0,0.38);
+      position:relative;
+      overflow:hidden;
+    }
+    .contact-form::before{
+      content:"";
+      position:absolute;
+      width:240px;
+      height:240px;
+      right:-120px;
+      top:-120px;
+      background:radial-gradient(circle, rgba(111,211,255,0.32), transparent 70%);
+      opacity:0.85;
+      pointer-events:none;
+    }
+    .contact-form > *{
+      position:relative;
+      z-index:1;
+    }
+    .contact-form label{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      color:rgba(231,236,243,0.62);
+      font-weight:600;
+    }
+    input, textarea{
+      width:100%;
+      background:rgba(8,14,20,0.78);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:14px;
+      padding:14px 16px;
+      color:var(--text);
+      font-family:var(--font-body);
+      font-size:0.95rem;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.02);
+      transition:transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    input::placeholder, textarea::placeholder{
+      color:rgba(231,236,243,0.55);
+    }
+    textarea{min-height:160px; resize:vertical;}
+    input:hover, textarea:hover{
+      border-color:rgba(255,255,255,0.22);
+    }
+    input:focus, textarea:focus{
+      outline:none;
+      background:rgba(10,18,26,0.9);
+      border-color:rgba(111,211,255,0.55);
+      box-shadow:0 0 0 3px rgba(65,227,212,0.2);
+      transform:translateY(-1px);
+    }
+    .contact-form .btn.primary{
+      width:100%;
+      justify-content:center;
+      letter-spacing:0.18em;
+    }
+    .contact-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      color:var(--muted);
+    }
+    .socials{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .socials a{
+      color:var(--text);
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,0.08);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:0.9rem;
+      transition:transform 0.2s ease, border-color 0.2s ease;
+    }
+    .socials a:hover{
+      transform:translateY(-2px);
+      border-color:rgba(65,227,212,0.35);
+    }
+
+    footer{
+      padding:50px 0 70px;
+      border-top:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      text-align:center;
+      font-size:0.9rem;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.is-visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+@media (max-width: 1280px){
+      .nav-links{
+        gap:16px;
+      }
+      .site-nav a{
+        font-size:0.85rem;
+      }
+      .header-cta{
+        gap:12px;
+      }
+      .header-cta .btn{
+        min-width:130px;
+        padding-inline:22px;
+      }
+      .availability{
+        font-size:0.78rem;
+        padding:6px 10px;
+      }
+    }
+
+@media (max-width: 1100px){
+      .nav-toggle-btn{
+        display:inline-flex;
+      }
+      .nav-links{
+        display:none;
+        position:absolute;
+        top:100%;
+        right:0;
+        margin-top:12px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+        padding:16px;
+        min-width:220px;
+        background:rgba(20,25,38,0.92);
+        border:1px solid rgba(255,255,255,0.08);
+        border-radius:var(--radius-sm);
+        box-shadow:var(--shadow-soft);
+      }
+      .nav-toggle:checked ~ .nav-links{
+        display:flex;
+      }
+      .site-nav{
+        justify-content:flex-end;
+      }
+    }
+
+@media (max-width: 1100px){
+      .hero-grid{
+        grid-template-columns:1fr;
+      }
+      .projects-grid,
+      .grid-3,
+      .grid-2,
+      .experience-grid,
+      .contact-grid{
+        grid-template-columns:1fr;
+      }
+      .timeline{
+        border-left:none;
+        padding-left:0;
+      }
+      .timeline-item::before{
+        left:12px;
+      }
+    }
+    @media (max-width: 720px){
+      .header-inner{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .site-nav{
+        width:100%;
+        justify-content:flex-end;
+      }
+      .header-cta{
+        width:100%;
+        justify-content:flex-start;
+        flex-wrap:wrap;
+      }
+      .hero-title{
+        font-size:2.4rem;
+      }
+      .stat-row{
+        grid-template-columns:1fr;
+      }
+      .music-control{
+        right:16px;
+        bottom:16px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important; animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <span class="brand-avatar">
+            <img src="Photo pro ngd.png" alt="Photo of Naïss">
+          </span>
+          <div class="brand-text">
+            <span class="brand-name">Naïss Geoffroy-Deride</span>
+            <span class="brand-role">Web Developer & AI (Foundations)</span>
+          </div>
+        </div>
+        <nav class="site-nav">
+          <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Toggle navigation" aria-controls="nav-menu">
+          <label class="nav-toggle-btn" for="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+          <div class="nav-links" id="nav-menu">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#freelance">Freelance</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Education</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+        <div class="header-cta">
+          <a class="btn" href="#contact">Let's talk</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal" data-reveal>
+            <div class="eyebrow">Web Developer & AI (Foundations)</div>
+            <h1 class="hero-title">Naïss <span>Geoffroy-Deride</span></h1>
+            <p class="hero-role">First-year student at EFREI Paris</p>
+            <div class="hero-badge"><span class="dot"></span>8–9 week internship starting April 27, 2026</div>
+            <p class="lead">
+              <span>I'm looking for an 8–9 week web development internship starting April 27, 2026, in Île-de-France.</span>
+              <span>I want to strengthen my foundations in front-end development, integration, and UI design.</span>
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#contact">Contact me</a>
+              <a class="btn" href="#projects">View my projects</a>
+            </div>
+            <div class="hero-tags">
+              <span class="pill">HTML5 / CSS3</span>
+              <span class="pill">Front-end development (foundations)</span>
+              <span class="pill">LuaU</span>
+              <span class="pill">AI (basics)</span>
+            </div>
+          </div>
+          <div class="hero-side">
+            <div class="profile-card reveal" data-reveal>
+              <div class="info-grid">
+                <div class="info-item">
+                  <span>Location</span>
+                  <strong>Antony (92160), Île-de-France</strong>
+                </div>
+                <div class="info-item">
+                  <span>Email</span>
+                  <strong>reach.naiss.gd@hotmail.com</strong>
+                </div>
+                <div class="info-item">
+                  <span>Phone</span>
+                  <strong>+33 7 65 54 31 81</strong>
+                </div>
+              </div>
+              <div class="stat-row">
+                <div class="stat" data-counter data-target="9"><strong>0</strong><span>Internship duration (weeks)</span></div>
+                <div class="stat" data-counter data-target="2"><strong>0</strong><span>Languages</span></div>
+                <div class="stat" data-counter data-target="5"><strong>0</strong><span>Key skills</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-header reveal" data-reveal>
+            <div>
+              <h2 class="section-title">About</h2>
+              <p class="section-sub">I'm a first-year web development student focused on building strong technical foundations while contributing to real projects.</p>
+            </div>
+          </div>
+          <div class="grid-3">
+            <article class="card reveal" data-reveal>
+              <h3>What I Do</h3>
+              <p>Front-end integration and layout development for personal and academic websites, with a focus on clean structure and visual clarity.</p>
+            </article>
+            <article class="card reveal" data-reveal>
+              <h3>My Soft Skills</h3>
+              <p>Rigor, autonomy, curiosity, and strong organizational skills.</p>
+            </article>
+            <article class="card reveal" data-reveal>
+              <h3>What I'm Looking For</h3>
+              <p>An 8–9 week web development internship starting April 27, 2026, in Île-de-France.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="section-header reveal" data-reveal>
+            <div>
+              <h2 class="section-title">Skills Overview</h2>
+              <p class="section-sub">A combination of technical, language, and interpersonal skills.</p>
+            </div>
+          </div>
+          <div class="grid-2">
+            <article class="card reveal" data-reveal>
+              <h3>Technical Skills</h3>
+              <p>Technologies I practice regularly.</p>
+              <div class="chip-list">
+                <span class="chip">LuaU</span>
+                <span class="chip">HTML5</span>
+                <span class="chip">CSS3</span>
+                <span class="chip">Front-end development (foundations)</span>
+                <span class="chip">Scripts and mini-games</span>
+              </div>
+            </article>
+            <article class="card reveal" data-reveal>
+              <h3>Languages Studied</h3>
+              <p>Technologies and concepts learned through coursework and self-study.</p>
+              <div class="chip-list">
+                <span class="chip">HTML5</span>
+                <span class="chip">CSS3</span>
+                <span class="chip">Java</span>
+                <span class="chip">Python</span>
+                <span class="chip">JavaScript</span>
+                <span class="chip">SQL / MySQL</span>
+              </div>
+            </article>
+            <article class="card reveal" data-reveal>
+              <h3>Soft Skills</h3>
+                <p>The personal qualities I bring to collaboration and everyday work.</p>
+              <div class="chip-list">
+                <span class="chip">Motivation</span>
+                <span class="chip">Eagerness to learn</span>
+                <span class="chip">Autonomy</span>
+                <span class="chip">Creativity</span>
+                <span class="chip">Organization</span>
+              </div>
+            </article>
+            <article class="card reveal" data-reveal>
+              <h3>Spoken Languages</h3>
+              <div class="chip-list">
+                <span class="chip">French (native)</span>
+                <span class="chip">English (B1)</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="freelance" class="section">
+        <div class="container">
+          <div class="section-header reveal" data-reveal>
+            <div>
+              <h2 class="section-title">Freelance / Independent Work</h2>
+            </div>
+          </div>
+          <div class="grid-2">
+            <article class="card reveal" data-reveal>
+              <p>Alongside my studies, I take on small freelance and independent web projects.</p>
+              <p>I focus on clean HTML/CSS integration, responsive layout, and clear UI structure.</p>
+              <ul class="experience-list">
+                <li>Small website builds (1-5 pages)</li>
+                <li>Front-end integration (HTML/CSS)</li>
+                <li>Responsive improvements & layout fixes</li>
+                <li>Light redesigns (visual cleanup, spacing, typography)</li>
+              </ul>
+            </article>
+            <article class="card reveal" data-reveal>
+              <p class="section-sub">Available for small freelance projects and internships starting April 27, 2026.</p>
+              <div class="hero-actions">
+                <a class="btn primary" href="#contact">Contact me</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-header reveal" data-reveal>
+            <div>
+              <h2 class="section-title">Projects & Practice</h2>
+              <p class="section-sub">Personal projects and exercises developed to strengthen my foundations.</p>
+            </div>
+          </div>
+          <div class="projects-grid">
+            <article class="card project-card reveal bg-web" data-reveal>
+              <div class="project-media">
+                <div class="media-content">
+                  <span class="media-icon">Web</span>
+                  <span class="media-label">UI / HTML</span>
+                </div>
+              </div>
+              <div class="project-body">
+                <h3>Web Projects — UI / HTML</h3>
+                <p>Personal websites focused on page structure, HTML/CSS integration, and attention to layout.</p>
+                <div class="project-tags">
+                  <span class="chip">HTML</span>
+                  <span class="chip">CSS</span>
+                  <span class="chip">UI Design</span>
+                </div>
+              </div>
+            </article>
+            <article class="card project-card reveal bg-lua" data-reveal>
+              <div class="project-media">
+                <div class="media-content">
+                  <span class="media-icon">Lua</span>
+                  <span class="media-label">Scripts</span>
+                </div>
+              </div>
+              <div class="project-body">
+                <h3>Lua Scripts & Mini-Games</h3>
+                <p>LuaU scripts developed to practice logic, interactivity, and game mechanics.</p>
+                <div class="project-tags">
+                  <span class="chip">LuaU</span>
+                  <span class="chip">Game Logic</span>
+                  <span class="chip">Scripting</span>
+                </div>
+              </div>
+            </article>
+            <article class="card project-card reveal bg-ux" data-reveal>
+              <div class="project-media">
+                <div class="media-content">
+                  <span class="media-icon">UX</span>
+                  <span class="media-label">Responsive</span>
+                </div>
+              </div>
+              <div class="project-body">
+                <h3>Front-End Exercises</h3>
+                <p>Exercises focused on responsive design, typography, user experience, and basic animations.</p>
+                <div class="project-tags">
+                  <span class="chip">Responsive Design</span>
+                  <span class="chip">CSS</span>
+                  <span class="chip">UX</span>
+                </div>
+              </div>
+            </article>
+            <article class="card project-card reveal bg-sec" data-reveal>
+              <div class="project-media">
+                <div class="media-content">
+                  <span class="media-icon">Sec</span>
+                  <span class="media-label">HTML / CSS</span>
+                </div>
+              </div>
+              <div class="project-body">
+                <h3>School Projects</h3>
+                <p>Academic projects involving HTML5 structure, CSS3 styling, and introduction to basic web security concepts.</p>
+                <div class="project-tags">
+                  <span class="chip">HTML5</span>
+                  <span class="chip">CSS3</span>
+                  <span class="chip">Security Basics</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <div class="container">
+          <div class="section-header reveal" data-reveal>
+            <div>
+              <h2 class="section-title">Education</h2>
+              <p class="section-sub">Current studies and academic background.</p>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="timeline-item reveal" data-reveal>
+              <strong>2025 – 2028</strong>
+              <span>EFREI Paris</span>
+              <h3>Bachelor’s Degree in Web Development (in progress)</h3>
+              <p class="section-sub">Program focused on web integration and application development. Languages studied: HTML5, CSS3, Java, Python, SQL, MySQL.</p>
+            </div>
+            <div class="timeline-item reveal" data-reveal>
+              <strong>2020 – 2023</strong>
+              <span>Lycée Gerville Réache — Guadeloupe</span>
+              <h3>ST2S High School Diploma — Lycée Gerville Réache</h3>
+              <p class="section-sub">General education and foundational academic methods.</p>
+            </div>
+          </div>
+          <div class="experience-grid">
+            <article class="card reveal" data-reveal>
+              <h3>Experience</h3>
+              <ul class="experience-list">
+                <li>Front-end UI integration for multiple personal websites</li>
+                <li>Development of scripts and mini-games using LuaU</li>
+              </ul>
+            </article>
+            <article class="card reveal" data-reveal>
+              <h3>Internship Objective</h3>
+              <ul class="experience-list">
+                <li>Apply my front-end skills on real projects and deliver clean, responsive pages.</li>
+                <li>Improve my HTML/CSS integration and UI consistency through team feedback.</li>
+                <li>Learn professional workflows (collaboration, iteration, and code quality).</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="section-header reveal" data-reveal>
+            <div>
+              <h2 class="section-title">Contact</h2>
+              <p class="section-sub">Available for a web development internship starting April 27, 2026.</p>
+            </div>
+          </div>
+          <div class="contact-grid">
+            <div class="card reveal" data-reveal>
+              <form class="contact-form" action="https://formspree.io/f/mlgwdlwd" method="POST">
+                <label>
+                  Your email
+                  <input type="email" name="email" placeholder="you@email.com" required>
+                </label>
+                <label>
+                  Your message
+                  <textarea name="message" placeholder="Tell me about your project or opportunity..." required></textarea>
+                </label>
+                <button class="btn primary" type="submit">Send message</button>
+              </form>
+
+
+            </div>
+            <div class="card reveal" data-reveal>
+              <h3>Availability & Info</h3>
+              <div class="contact-list">
+                <div>92160, Antony</div>
+                <div>Île-de-France</div>
+                <div>reach.naiss.gd@hotmail.com</div>
+                <div>+33 7 65 54 31 81</div>
+              </div>
+              <div class="socials">
+                <a href="https://www.linkedin.com/in/na%C3%AFss-geoffroy-deride-556960388/" target="_blank" rel="noopener">LinkedIn: Naïss Geoffroy-Deride</a>
+              </div>
+              <a class="btn" href="mailto:reach.naiss.gd@hotmail.com">Write an email</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <audio id="bg-audio" src="Not%20Allowed%20(Slowed%20%2B%20Reverb).mp3" preload="metadata" loop></audio>
+    <button id="music-toggle" class="btn music-control" type="button">Music: Off</button>
+
+    <footer>
+      <div class="container">© 2026 Naïss.io</div>
+    </footer>
+  </div>
+
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    
+    const reveals = document.querySelectorAll('[data-reveal]');
+    if (reduceMotion) {
+      reveals.forEach(el => el.classList.add('is-visible'));
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(el => observer.observe(el));
+    }
+
+    const counters = document.querySelectorAll('[data-counter]');
+    const runCounter = (el) => {
+      const target = parseInt(el.dataset.target, 10) || 0;
+      const numberEl = el.querySelector('strong');
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 60));
+      const tick = () => {
+        current += step;
+        if (current >= target) {
+          numberEl.textContent = `${target}`;
+        } else {
+          numberEl.textContent = `${current}`;
+          requestAnimationFrame(tick);
+        }
+      };
+      tick();
+    };
+
+    if (reduceMotion) {
+      counters.forEach(runCounter);
+    } else {
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            runCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(counter => counterObserver.observe(counter));
+    }
+
+    const audio = document.getElementById('bg-audio');
+    const musicBtn = document.getElementById('music-toggle');
+    if (audio && musicBtn) {
+      audio.volume = 0.2;
+      const setState = (isPlaying) => {
+        musicBtn.textContent = isPlaying ? 'Music: On' : 'Music: Off';
+        musicBtn.setAttribute('aria-pressed', String(isPlaying));
+      };
+      setState(false);
+      const requestPlay = async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            setState(true);
+          } catch (err) {
+            setState(false);
+          }
+        }
+      };
+      const startOnFirstInteraction = () => {
+        requestPlay();
+      };
+      document.addEventListener('click', startOnFirstInteraction, { once: true });
+      document.addEventListener('keydown', startOnFirstInteraction, { once: true });
+      musicBtn.addEventListener('click', async () => {
+        if (audio.paused) {
+          await requestPlay();
+        } else {
+          audio.pause();
+          setState(false);
+        }
+      });
+      
+    }
+
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', () => {
+        setTimeout(() => contactForm.reset(), 150);
+      });
+    }
+  </script>
+</body>
+</html>
