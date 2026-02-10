@@ -50,6 +50,11 @@
     }
     a, button{cursor:pointer;}
     input, textarea{cursor:text;}
+    a[href^="tel"],
+    a[x-apple-data-detectors]{
+      color:inherit !important;
+      text-decoration:none !important;
+    }
     img{max-width:100%;display:block;}
     h1, h2, h3{font-family:var(--font-heading);font-weight:600;}
     p{line-height:1.7;}
